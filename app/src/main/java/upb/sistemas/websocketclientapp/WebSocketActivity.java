@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.view.ViewGroup.LayoutParams;
@@ -28,10 +27,10 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
 public class WebSocketActivity extends AppCompatActivity implements TextWatcher {
-    private String chatName;
+    private String username;
     private WebSocket webSocket;
-    private String SERVER = "192.168.100.30";
-    private int PORT = 3000;
+    private String SERVER;
+    private int PORT;
     private EditText messageEdit;
     private View sendButton;
     private RecyclerView recyclerView;
@@ -42,8 +41,10 @@ public class WebSocketActivity extends AppCompatActivity implements TextWatcher 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_socket);
 
+        username = getIntent().getStringExtra("username");
+        SERVER = getIntent().getStringExtra("serverIP");
+        PORT = Integer.parseInt(getIntent().getStringExtra("serverPort"));
 
-        chatName = getIntent().getStringExtra("chatName");
         OkHttpClient client = new OkHttpClient.Builder()
                 .pingInterval(0, TimeUnit.SECONDS).connectTimeout(1000, TimeUnit.MILLISECONDS).build();
         Request request = new Request.Builder().url("ws://" + SERVER + ":" + PORT + "/").build();
@@ -168,7 +169,7 @@ public class WebSocketActivity extends AppCompatActivity implements TextWatcher 
 
         recyclerView = findViewById(R.id.recyclerView);
 
-        messageAdapter = new MessageAdapter(getLayoutInflater());
+        messageAdapter = new MessageAdapter(getLayoutInflater(), username);
         recyclerView.setAdapter(messageAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -179,7 +180,7 @@ public class WebSocketActivity extends AppCompatActivity implements TextWatcher 
 
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("name", chatName);
+                jsonObject.put("name", username);
                 jsonObject.put("content", messageEdit.getText().toString());
 
                 webSocket.send(jsonObject.toString());

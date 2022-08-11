@@ -32,15 +32,17 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 10);
 
 
-        EditText editText = findViewById(R.id.editText);
+        EditText userName = findViewById(R.id.usernameET);
+        EditText serverIP = findViewById(R.id.serverIP_ET);
+        EditText serverPort = findViewById(R.id.portET);
 
-        findViewById(R.id.enterBtn)
+        findViewById(R.id.connectBtn)
                 .setOnClickListener(v -> {
-
                     Intent intent = new Intent(this, WebSocketActivity.class);
-                    intent.putExtra("chatName", editText.getText().toString());
+                    intent.putExtra("username", userName.getText().toString());
+                    intent.putExtra("serverIP", serverIP.getText().toString());
+                    intent.putExtra("serverPort", serverPort.getText().toString());
                     startActivity(intent);
-
                 });
     }
 

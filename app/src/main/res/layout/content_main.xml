@@ -8,40 +8,72 @@
 
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/usernameET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="24dp"
+        android:autofillHints="none"
         android:background="@drawable/edittext_design"
-        android:hint="Enter your name"
+        android:hint="Username"
+        android:inputType="text"
         android:minHeight="48dp"
         android:padding="10dp"
-        android:textSize="16sp"
         android:textColor="@color/black"
         android:textColorHint="#333333"
-        app:layout_constraintBottom_toTopOf="@+id/enterBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="16sp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/serverIP_ET"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:ignore="HardcodedText" />
 
-    <Button
-        android:id="@+id/enterBtn"
+    <EditText
+        android:id="@+id/serverIP_ET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editText"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:autofillHints="none"
+        android:background="@drawable/edittext_design"
+        android:hint="Server IP"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="#333333"
+        android:textSize="16sp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/portET"
+        app:layout_constraintTop_toBottomOf="@+id/usernameET"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/portET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="none"
+        android:background="@drawable/edittext_design"
+        android:hint="Port"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="#333333"
+        android:textSize="16sp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/connectBtn"
+        app:layout_constraintTop_toBottomOf="@+id/serverIP_ET"
+        tools:ignore="HardcodedText"
+        tools:layout_editor_absoluteX="8dp" />
+
+
+    <Button
+        android:id="@+id/connectBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usernameET"
         android:background="@color/black"
-        android:text="Enter room"
+        android:text="Connect"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/portET"
+        tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

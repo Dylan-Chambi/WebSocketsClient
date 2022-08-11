@@ -12,41 +12,47 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_MESSAGE_SENT = 0;
     private static final int TYPE_MESSAGE_RECEIVED = 1;
+    private String username;
 
     private final LayoutInflater inflater;
     private final List<JSONObject> messages = new ArrayList<>();
 
-    public MessageAdapter(LayoutInflater inflater) {
+    public MessageAdapter(LayoutInflater inflater, String username) {
         this.inflater = inflater;
+        this.username = username;
     }
 
     private static class SentMessageHolder extends RecyclerView.ViewHolder {
 
-        TextView messageTxt;
+        TextView usernameTV, sendMessageTV, sendTimeTV;
 
         public SentMessageHolder(@NonNull View itemView) {
             super(itemView);
-
-            messageTxt = itemView.findViewById(R.id.sentTxt);
+            usernameTV = itemView.findViewById(R.id.usernameTV);
+            sendMessageTV = itemView.findViewById(R.id.sendMessageTV);
+            sendTimeTV = itemView.findViewById(R.id.sendTimeTV);
         }
     }
 
     private static class ReceivedMessageHolder extends RecyclerView.ViewHolder {
 
-        TextView nameTxt, messageTxt;
+        TextView senderNameTV, recieveTextTV, recieveTimeTV;
 
         public ReceivedMessageHolder(@NonNull View itemView) {
             super(itemView);
 
-            nameTxt = itemView.findViewById(R.id.nameTxt);
-            messageTxt = itemView.findViewById(R.id.receivedTxt);
+            senderNameTV = itemView.findViewById(R.id.senderNameTV);
+            recieveTextTV = itemView.findViewById(R.id.recieveTextTV);
+            recieveTimeTV = itemView.findViewById(R.id.recieveTimeTV);
         }
     }
 
@@ -93,19 +99,23 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         JSONObject message = messages.get(position);
+        String currentTime = "";
+        currentTime += Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":" + Calendar.getInstance().get(Calendar.MINUTE);
 
         try {
             if (message.getBoolean("isSent")) {
 
-
                 SentMessageHolder messageHolder = (SentMessageHolder) holder;
-                messageHolder.messageTxt.setText(message.getString("content"));
+                messageHolder.usernameTV.setText(username);
+                messageHolder.sendMessageTV.setText(message.getString("content"));
+                messageHolder.sendTimeTV.setText(currentTime);
 
             } else {
 
                 ReceivedMessageHolder messageHolder = (ReceivedMessageHolder) holder;
-                messageHolder.nameTxt.setText(message.getString("name"));
-                messageHolder.messageTxt.setText(message.getString("content"));
+                messageHolder.senderNameTV.setText(message.getString("name"));
+                messageHolder.recieveTextTV.setText(message.getString("content"));
+                messageHolder.recieveTimeTV.setText(currentTime);
 
 
             }
